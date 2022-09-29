@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 [System.Serializable]
 public enum JoystickSide {
@@ -8,22 +10,52 @@ public enum JoystickSide {
     joystickRight
 }
 
-public class InputController : MonoBehaviour {
+public class InputController : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler {
 
-
-    [SerializeField] private Joystick joystick;
     [SerializeField] private JoystickSide joystickSide;
-    [SerializeField] private string test;
+    [SerializeField] private Image joystickBg;
+    [SerializeField] private Image joystickHandle;
+    [SerializeField] private float verticalInput;
+
+    private Vector2 posInput;
+    private Vector2 startPos;
+
+    private void Start() {
+        startPos = new Vector2(joystickHandle.rectTransform.anchoredPosition.x, joystickHandle.rectTransform.anchoredPosition.y);
+    }
 
     private void Update() {
-        switch (joystickSide) {
-            case JoystickSide.joystickLeft:
-            Debug.Log($"Left : {joystick.Vertical}");
-            break;
+    
+    }
 
-            case JoystickSide.joystickRight:
-            Debug.Log($"Right : {joystick.Vertical}");
-            break;
+    public void OnDrag(PointerEventData eventData) {
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            joystickBg.rectTransform,
+            eventData.position,
+            eventData.pressEventCamera,
+            out posInput)) 
+        {
+            // Calcualte vertical movement
+            verticalInput = (posInput.y / joystickBg.rectTransform.sizeDelta.y) * 2;
+            if (verticalInput > 1) {
+                verticalInput = 1;
+            }
+            else if (verticalInput < -1) {
+                verticalInput = -1;
+            }
+
+            // joystickHandle movement
+            joystickHandle.rectTransform.anchoredPosition = new Vector2(joystickHandle.rectTransform.anchoredPosition.x, posInput.y);
         }
+    }
+
+    public void OnPointerDown(PointerEventData eventData) {
+        OnDrag(eventData);
+    }
+
+    public void OnPointerUp(PointerEventData eventData) {
+        posInput = Vector2.zero;
+        verticalInput = 0;
+        joystickHandle.rectTransform.anchoredPosition = startPos;
     }
 }
