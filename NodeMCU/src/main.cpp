@@ -22,30 +22,28 @@ void setup() {
     Serial.begin(115200);
     Serial.println();
     
-    // Creating wifi access point
     Serial.println("Creating Access Point...");
-    // WiFi.softAP(ssid);
-    // WiFi.begin(ssid, password);
-
-    // WiFi.mode(WIFI_AP_STA);
     WiFi.softAP(hostName, password);
     // WiFi.begin(ssid, password);
 
     Serial.print("Access Point Name: ");
     Serial.println(WiFi.softAPSSID());
     
-    // IPAddress IP = WiFi.softAPIP();
     Serial.print("Access Point IP: ");
     Serial.println(WiFi.softAPIP());
 
     // API Requests
     server.on("/lm", HTTP_POST, [](AsyncWebServerRequest *request) {
         AsyncWebParameter* param1 = request->getParam("input", true);
+        Serial.print("API /lm = ");
+        Serial.println(param1->value());
         leftMotorInput = param1->value().toFloat();
     });
     
     server.on("/rm", HTTP_POST, [](AsyncWebServerRequest *request) {
         AsyncWebParameter* param2 = request->getParam("input", true);
+        Serial.print("API /rm = ");
+        Serial.println(param2->value());
         rightMotorInput = param2->value().toFloat();
     });
 
@@ -58,13 +56,12 @@ void setup() {
 }
 
 void loop() {
-    // delay(1000);
-    // Serial.print("LMI = ");
-    // Serial.print(leftMotorInput);
-    // Serial.print(" | RMI = ");
-    // Serial.print(rightMotorInput);
-    // Serial.print(" | Connected clients = ");
-    // Serial.println();
+    delay(1000);
+    Serial.print("LMI = ");
+    Serial.print(leftMotorInput);
+    Serial.print(" | RMI = ");
+    Serial.print(rightMotorInput);
+    Serial.println();
 }
 
 
