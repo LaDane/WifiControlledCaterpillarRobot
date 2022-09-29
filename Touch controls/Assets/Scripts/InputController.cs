@@ -43,6 +43,7 @@ public class InputController : MonoBehaviour, IDragHandler, IPointerDownHandler,
             else if (verticalInput < -1) {
                 verticalInput = -1;
             }
+            verticalInput = (float)System.Math.Round(verticalInput, 2);
 
             // joystickHandle movement
             joystickHandle.rectTransform.anchoredPosition = new Vector2(joystickHandle.rectTransform.anchoredPosition.x, posInput.y);
