@@ -25,7 +25,10 @@ public class InputController : MonoBehaviour, IDragHandler, IPointerDownHandler,
     }
 
     private void Update() {
-    
+        switch (joystickSide) {
+            case JoystickSide.joystickLeft: AppManager.Instance.leftStickInput = verticalInput; break;
+            case JoystickSide.joystickRight: AppManager.Instance.rightStickInput = verticalInput; break;
+        }
     }
 
     public void OnDrag(PointerEventData eventData) {
@@ -36,7 +39,7 @@ public class InputController : MonoBehaviour, IDragHandler, IPointerDownHandler,
             out posInput)) 
         {
             // Calcualte vertical movement
-            verticalInput = (posInput.y / joystickBg.rectTransform.sizeDelta.y) * 2;
+            verticalInput = (posInput.y / joystickBg.rectTransform.sizeDelta.y) * 2.2f;
             if (verticalInput > 1) {
                 verticalInput = 1;
             }
