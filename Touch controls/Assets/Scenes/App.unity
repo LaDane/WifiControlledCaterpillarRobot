@@ -250,9 +250,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6957c6f93c26e547801aa015419394d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputApiEndpoint: 192.168.4.1/rm
   joystickSide: 1
   joystickBg: {fileID: 1639172483}
   joystickHandle: {fileID: 1629192310}
+  motorName: RightMotor
+  maxPWM: 256
   verticalInput: 0
 --- !u!1 &519420028
 GameObject:
@@ -537,9 +540,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6957c6f93c26e547801aa015419394d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputApiEndpoint: 192.168.4.1/lm
   joystickSide: 0
   joystickBg: {fileID: 1885336029}
   joystickHandle: {fileID: 216374618}
+  motorName: LeftMotor
+  maxPWM: 256
   verticalInput: 0
 --- !u!1 &1364886666
 GameObject:
@@ -1198,12 +1204,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ea02e87d2af48442b71edd1bfb6e9c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenRequests: 0.25
-  leftMotorEndpoint: 192.168.4.1/lm
-  rightMotorEndpoint: 192.168.4.1/rm
   transmitData: 0
-  leftStickInput: 0
-  rightStickInput: 0
+  timeBetweenRequests: 0.25
+  timeBetweenUpdates: 0.02
+  speedChangeInterval: 8
 --- !u!4 &2128791617
 Transform:
   m_ObjectHideFlags: 0

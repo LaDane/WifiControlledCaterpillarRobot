@@ -5,18 +5,18 @@ using UnityEngine.Networking;
 
 public class AppManager : MonoBehaviour {
 
-    [Header("API settings")]
-    [SerializeField] private float timeBetweenRequests = 0.25f;
-    [SerializeField] private string leftMotorEndpoint = "192.168.4.1/lm";
-    [SerializeField] private string rightMotorEndpoint = "192.168.4.1/rm";
-
-    [Header("Touch input variables")]
+    [Header("API Settings")]
     public bool transmitData = false;
-    public float leftStickInput;
-    public float rightStickInput;
+    [SerializeField] private float timeBetweenRequests = 0.25f;
 
-    private float lastLeftStickInput;
-    private float lastRightStickInput;
+    [Header("Motor Settings")]
+    [SerializeField] public float timeBetweenUpdates = 0.25f;
+    [SerializeField] public int speedChangeInterval = 8;
+
+
+    public List<MotorInput> motorInputs = new List<MotorInput>();
+    //private bool startedCoroutines = false;
+
 
     private static AppManager _instance;
     public static AppManager Instance {
@@ -36,44 +36,35 @@ public class AppManager : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    private void Start() {
-        StartCoroutine(leftMotorAPI());
-        StartCoroutine(rightMotorAPI());
-    }
+    //private void Update() {
+    //    if (!startedCoroutines) {
+    //        for (int i = 0; i < motorInputs.Count; i++) {
+    //            StartCoroutine(SendInputApiCheck(motorInputs[i]));
+    //        }
+    //        startedCoroutines = true;
+    //    }
+    //}
 
-    private IEnumerator leftMotorAPI() {
-        while(true) {
-            yield return new WaitForSeconds(timeBetweenRequests);
-            if (transmitData) {
 
-                if (leftStickInput != lastLeftStickInput) {
-                    WWWForm lmForm = new WWWForm();
-                    lmForm.AddField("input", leftStickInput.ToString());
-                    using (UnityWebRequest www = UnityWebRequest.Post(leftMotorEndpoint, lmForm)) {
-                        yield return www.SendWebRequest();
-                    }
-                    lastLeftStickInput = leftStickInput;
-                    //Debug.Log($"Sent API request to Left Motor | {leftStickInput}");
-                }
-            }
+    //private IEnumerator SendInputApiCheck(MotorInput motorInput) {
+    //    while(true) {
+    //        yield return new WaitForSeconds(timeBetweenRequests);
+            
+    //        if (transmitData && motorInput.input != motorInput.lastInput) {
+    //            motorInput.lastInput = motorInput.input;
+    //            StartCoroutine(SendInputApi(motorInput));
+    //        }
+    //    }
+    //}
+
+    public IEnumerator SendInputApi(MotorInput motorInput) {
+        WWWForm miForm = new WWWForm();
+        //miForm.AddField("input", motorInput.input.ToString());
+        miForm.AddField("input", motorInput.calculatedMotorSpeed.ToString());
+
+        using (UnityWebRequest www = UnityWebRequest.Post(motorInput.inputApiEndpoint, miForm)) {
+            yield return www.SendWebRequest();
         }
-    }
-
-    private IEnumerator rightMotorAPI() {
-        while (true) {
-            yield return new WaitForSeconds(timeBetweenRequests);
-            if (transmitData) {
-
-                if (rightStickInput != lastRightStickInput) {
-                    WWWForm rmForm = new WWWForm();
-                    rmForm.AddField("input", rightStickInput.ToString());
-                    using (UnityWebRequest www = UnityWebRequest.Post(rightMotorEndpoint, rmForm)) {
-                        yield return www.SendWebRequest();
-                    }
-                    lastRightStickInput = rightStickInput;
-                    //Debug.Log($"Sent API request to Right Motor | {rightStickInput}");
-                }
-            }
-        }
+        //Debug.Log($"{motorInput.motorName} | {motorInput.calculatedMotorSpeed}");
     }
 }
