@@ -1198,7 +1198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ea02e87d2af48442b71edd1bfb6e9c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenRequests: 0.5
+  timeBetweenRequests: 0.25
   leftMotorEndpoint: 192.168.4.1/lm
   rightMotorEndpoint: 192.168.4.1/rm
   transmitData: 0
