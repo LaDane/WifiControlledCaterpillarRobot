@@ -7,6 +7,7 @@ const char *ssid = "WCCR AP"; // The name of the Wi-Fi network that will be crea
 const char *password = "spoonman123";   // The password required to connect to it, leave blank for an open network
 
 // API request inputs
+signed short int totalPostsAPI = 0;
 float leftMotorInput = 0;
 float rightMotorInput = 0;
 
@@ -43,6 +44,7 @@ void setup() {
 
     // API Requests
     server.on("/lm", HTTP_POST, [](AsyncWebServerRequest *request) {
+        totalPostsAPI++;
         AsyncWebParameter* param1 = request->getParam("input", true);
         // Serial.print("API /lm = ");
         // Serial.println(param1->value());
@@ -51,6 +53,7 @@ void setup() {
     });
     
     server.on("/rm", HTTP_POST, [](AsyncWebServerRequest *request) {
+        totalPostsAPI++;
         AsyncWebParameter* param2 = request->getParam("input", true);
         // Serial.print("API /rm = ");
         // Serial.println(param2->value());
@@ -145,7 +148,12 @@ void loop() {
     Serial.print(rightMotorSpeed);
 
     Serial.print(" rmF=");
-    Serial.println(rightMotorForward);
+    Serial.print(rightMotorForward);
+
+    // API counter
+    Serial.print( " | (");
+    Serial.print(totalPostsAPI);
+    Serial.println(")");
 }
 
 

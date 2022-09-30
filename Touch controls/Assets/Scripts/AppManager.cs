@@ -46,7 +46,7 @@ public class AppManager : MonoBehaviour {
             yield return new WaitForSeconds(timeBetweenRequests);
             if (transmitData) {
 
-                //if (leftStickInput != lastLeftStickInput) {
+                if (leftStickInput != lastLeftStickInput) {
                     WWWForm lmForm = new WWWForm();
                     lmForm.AddField("input", leftStickInput.ToString());
                     using (UnityWebRequest www = UnityWebRequest.Post(leftMotorEndpoint, lmForm)) {
@@ -54,7 +54,7 @@ public class AppManager : MonoBehaviour {
                     }
                     lastLeftStickInput = leftStickInput;
                     //Debug.Log($"Sent API request to Left Motor | {leftStickInput}");
-                //}
+                }
             }
         }
     }
@@ -64,7 +64,7 @@ public class AppManager : MonoBehaviour {
             yield return new WaitForSeconds(timeBetweenRequests);
             if (transmitData) {
 
-                //if (rightStickInput != lastRightStickInput) {
+                if (rightStickInput != lastRightStickInput) {
                     WWWForm rmForm = new WWWForm();
                     rmForm.AddField("input", rightStickInput.ToString());
                     using (UnityWebRequest www = UnityWebRequest.Post(rightMotorEndpoint, rmForm)) {
@@ -72,7 +72,7 @@ public class AppManager : MonoBehaviour {
                     }
                     lastRightStickInput = rightStickInput;
                     //Debug.Log($"Sent API request to Right Motor | {rightStickInput}");
-                //}
+                }
             }
         }
     }

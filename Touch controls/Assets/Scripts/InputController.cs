@@ -38,8 +38,8 @@ public class InputController : MonoBehaviour, IDragHandler, IPointerDownHandler,
             eventData.pressEventCamera,
             out posInput)) 
         {
-            // Calcualte vertical movement
-            verticalInput = (posInput.y / joystickBg.rectTransform.sizeDelta.y) * 2.2f;
+            // Calcualte vertical movement of touch input
+            verticalInput = (posInput.y / joystickBg.rectTransform.sizeDelta.y) * 2.4f;
             if (verticalInput > 1) {
                 verticalInput = 1;
             }
