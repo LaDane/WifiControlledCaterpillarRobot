@@ -254,6 +254,13 @@ MonoBehaviour:
   joystickSide: 1
   joystickBg: {fileID: 1639172483}
   joystickHandle: {fileID: 1629192310}
+  motorInput:
+    motorName: RightMotor
+    maxPWM: 256
+    input: 0
+    lastInput: 0
+    calculatedMotorSpeed: 0
+    inputApiEndpoint: 192.168.4.1/rm
   motorName: RightMotor
   maxPWM: 256
   verticalInput: 0
@@ -544,6 +551,13 @@ MonoBehaviour:
   joystickSide: 0
   joystickBg: {fileID: 1885336029}
   joystickHandle: {fileID: 216374618}
+  motorInput:
+    motorName: LeftMotor
+    maxPWM: 256
+    input: 0
+    lastInput: 0
+    calculatedMotorSpeed: 0
+    inputApiEndpoint: 192.168.4.1/lm
   motorName: LeftMotor
   maxPWM: 256
   verticalInput: 0

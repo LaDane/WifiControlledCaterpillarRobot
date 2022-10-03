@@ -13,18 +13,18 @@ signed short int rightMotorInput = 0;
 
 // Motor values
 // L298N max PWM = 256
-// signed short int speedChangeInterval = 8;
+signed short int speedChangeInterval = 1;
 
 // float leftMotorTargetSpeed = 0;
-// signed short int leftMotorSpeed = 0;
+signed short int leftMotorSpeed = 0;
 bool leftMotorForward = true;
 
 // float rightMotorTargetSpeed = 0;
-// signed short int rightMotorSpeed = 0;
+signed short int rightMotorSpeed = 0;
 bool rightMotorForward = true;
 
 // Delays
-int loopDelay = 25;
+int loopDelay = 5;
 
 AsyncWebServer server(80);          // Create AsyncWebServer object on port 80
 
@@ -47,7 +47,7 @@ void setup() {
         totalPostsAPI++;
         AsyncWebParameter* param = request->getParam("input", true);
 
-        param->value().toInt() > 0 ? leftMotorForward = true : leftMotorForward = false;
+        // param->value().toInt() > 0 ? leftMotorForward = true : leftMotorForward = false;
         leftMotorInput = abs(param->value().toInt());
         request->send(200);
     });
@@ -56,7 +56,7 @@ void setup() {
         totalPostsAPI++;
         AsyncWebParameter* param = request->getParam("input", true);
 
-        param->value().toInt() > 0 ? rightMotorForward = true : rightMotorForward = false;
+        // param->value().toInt() > 0 ? rightMotorForward = true : rightMotorForward = false;
         rightMotorInput = param->value().toInt();
         request->send(200);
     });
@@ -74,16 +74,20 @@ void setup() {
 void loop() {
     delay(loopDelay);
 
-    // leftMotorInput > 0 ? leftMotorForward = true : leftMotorForward = false;
-    // rightMotorInput > 0 ? rightMotorForward = true : rightMotorForward = false;
+    leftMotorSpeed < leftMotorInput ? leftMotorSpeed += speedChangeInterval : leftMotorSpeed -= speedChangeInterval;
+    leftMotorSpeed > 0 ? leftMotorForward = true : leftMotorForward = false;
+    
+    rightMotorSpeed < rightMotorInput ? rightMotorSpeed += speedChangeInterval : rightMotorSpeed -= speedChangeInterval;
+    rightMotorSpeed > 0 ? rightMotorForward = true : rightMotorForward = false;
+
 
     Serial.print("Lmotor : ");
-    Serial.print(leftMotorInput);
+    Serial.print(leftMotorSpeed);
     Serial.print("\t Lforward : ");
     Serial.print(leftMotorForward);
 
     Serial.print("\t\t Rmotor : ");
-    Serial.print(rightMotorInput);
+    Serial.print(rightMotorSpeed);
     Serial.print("\t Rforward : ");
     Serial.print(rightMotorForward);
 

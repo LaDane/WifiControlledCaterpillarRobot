@@ -7,14 +7,14 @@ public class AppManager : MonoBehaviour {
 
     [Header("API Settings")]
     public bool transmitData = false;
-    [SerializeField] private float timeBetweenRequests = 0.25f;
+    public float timeBetweenRequests = 0.25f;
 
     [Header("Motor Settings")]
-    [SerializeField] public float timeBetweenUpdates = 0.25f;
-    [SerializeField] public int speedChangeInterval = 8;
+    public float timeBetweenUpdates = 0.25f;
+    public int speedChangeInterval = 8;
 
 
-    public List<MotorInput> motorInputs = new List<MotorInput>();
+    //public List<MotorInput> motorInputs = new List<MotorInput>();
     //private bool startedCoroutines = false;
 
 
@@ -57,14 +57,14 @@ public class AppManager : MonoBehaviour {
     //    }
     //}
 
-    public IEnumerator SendInputApi(MotorInput motorInput) {
-        WWWForm miForm = new WWWForm();
-        //miForm.AddField("input", motorInput.input.ToString());
-        miForm.AddField("input", motorInput.calculatedMotorSpeed.ToString());
+    //public IEnumerator SendInputApi(MotorInput motorInput) {
+    //    WWWForm miForm = new WWWForm();
+    //    //miForm.AddField("input", motorInput.input.ToString());
+    //    miForm.AddField("input", motorInput.calculatedMotorSpeed.ToString());
 
-        using (UnityWebRequest www = UnityWebRequest.Post(motorInput.inputApiEndpoint, miForm)) {
-            yield return www.SendWebRequest();
-        }
-        //Debug.Log($"{motorInput.motorName} | {motorInput.calculatedMotorSpeed}");
-    }
+    //    using (UnityWebRequest www = UnityWebRequest.Post(motorInput.inputApiEndpoint, miForm)) {
+    //        yield return www.SendWebRequest();
+    //    }
+    //    //Debug.Log($"{motorInput.motorName} | {motorInput.calculatedMotorSpeed}");
+    //}
 }
