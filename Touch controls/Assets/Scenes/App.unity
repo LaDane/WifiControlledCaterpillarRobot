@@ -252,13 +252,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joystickBg: {fileID: 1639172483}
   joystickHandle: {fileID: 1629192310}
-  motorInput:
-    motorName: RightMotor
-    maxPWM: 256
+  motor:
     input: 0
-    lastInput: 0
-    calculatedMotorSpeed: 0
-    inputApiEndpoint: 192.168.4.1/rm
+    output: 0
+    lastSentOutput: 0
+    maxPWM: 256
+    ApiEndpoint: 192.168.4.1/rm
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,13 +543,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joystickBg: {fileID: 1885336029}
   joystickHandle: {fileID: 216374618}
-  motorInput:
-    motorName: LeftMotor
-    maxPWM: 256
+  motor:
     input: 0
-    lastInput: 0
-    calculatedMotorSpeed: 0
-    inputApiEndpoint: 192.168.4.1/lm
+    output: 0
+    lastSentOutput: 0
+    maxPWM: 256
+    ApiEndpoint: 192.168.4.1/lm
 --- !u!1 &1364886666
 GameObject:
   m_ObjectHideFlags: 0
