@@ -4,7 +4,6 @@
 #include "Motor.h"
 
 const char *hostName = "esp-async-wccr";    // Access Point WiFi name
-// const char *ssid = "WCCR AP"; // The name of the Wi-Fi network that will be created
 const char *password = "spoonman123";   // The password required to connect to it, leave blank for an open network
 
 // API requests
@@ -27,7 +26,6 @@ void setup() {
     
     Serial.println("Creating Access Point...");
     WiFi.softAP(hostName, password);
-    // WiFi.begin(ssid, password);
 
     Serial.print("Access Point Name: ");
     Serial.println(WiFi.softAPSSID());
@@ -36,17 +34,19 @@ void setup() {
 
     // API Requests
     server.on("/lm", HTTP_POST, [](AsyncWebServerRequest *request) {
-        totalPostsAPI++;
         AsyncWebParameter* param = request->getParam("input", true);
-        leftMotorInput = abs(param->value().toInt());
+        // Serial.println(param->value());
+        leftMotorInput = param->value().toInt();
         request->send(200);
+        totalPostsAPI++;
     });
     
     server.on("/rm", HTTP_POST, [](AsyncWebServerRequest *request) {
-        totalPostsAPI++;
-        AsyncWebParameter* param = request->getParam("input", true);
+        AsyncWebParameter* param = request->getParam("input", true);        
+        // Serial.println(param->value());
         rightMotorInput = param->value().toInt();
         request->send(200);
+        totalPostsAPI++;
     });
 
     // server.on("/t", HTTP_GET, [](AsyncWebServerRequest *request){
@@ -58,16 +58,7 @@ void setup() {
     Serial.println("Access Point setup completed");
 }
 
-void loop() {
-    delay(loopDelay);
-
-    leftMotor.update(leftMotorInput);
-    rightMotor.update(rightMotorInput);
-
-    debugData();
-}
-
-void debugData() {
+void DebugData() {
     Serial.print("Lmotor : ");
     Serial.print(leftMotor.motorSpeed);
     Serial.print("\t Lforward : ");
@@ -82,3 +73,16 @@ void debugData() {
     Serial.print(totalPostsAPI);
     Serial.println(")");
 }
+
+void loop() {
+    delay(loopDelay);
+
+    leftMotor.update(leftMotorInput);
+    rightMotor.update(rightMotorInput);
+
+    // Use absolute value of motor.motorSpeed when controlling motor PWM signal
+
+    // DebugData();
+}
+
+

@@ -45,9 +45,22 @@ public class InputController : MonoBehaviour, IDragHandler, IPointerDownHandler,
 
         using (UnityWebRequest www = UnityWebRequest.Post(motor.ApiEndpoint, motorInputForm)) {
             yield return www.SendWebRequest();
+
+            // Send extra request to ensure 0 input gets transmitted
+            if (motor.output == 0 && motor.output != motor.lastSentOutput) {
+                StartCoroutine(SendApiDataRequest());
+            }
+
+            if (www.result == UnityWebRequest.Result.Success) {
+                motor.lastSentOutput = motor.output;
+                Debug.Log($"{motor.output}");
+            }
+            else {
+                // Resend packet on request failure
+                Debug.LogWarning("Failed to send packet, resending...");
+                StartCoroutine(SendApiDataRequest());
+            }
         }
-        motor.lastSentOutput = motor.output;
-        Debug.Log($"{motor.output}");
     }
 
     public void OnDrag(PointerEventData eventData) {
