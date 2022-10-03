@@ -74,11 +74,43 @@ void setup() {
 void loop() {
     delay(loopDelay);
 
-    leftMotorSpeed < leftMotorInput ? leftMotorSpeed += speedChangeInterval : leftMotorSpeed -= speedChangeInterval;
-    leftMotorSpeed > 0 ? leftMotorForward = true : leftMotorForward = false;
+    // leftMotorSpeed < leftMotorInput ? leftMotorSpeed += speedChangeInterval : leftMotorSpeed -= speedChangeInterval;
+    // leftMotorSpeed > 0 ? leftMotorForward = true : leftMotorForward = false;
     
-    rightMotorSpeed < rightMotorInput ? rightMotorSpeed += speedChangeInterval : rightMotorSpeed -= speedChangeInterval;
-    rightMotorSpeed > 0 ? rightMotorForward = true : rightMotorForward = false;
+    if (leftMotorSpeed < leftMotorInput) {
+        leftMotorSpeed = leftMotorSpeed + speedChangeInterval;
+    }
+    else if (leftMotorSpeed > leftMotorInput) {
+        leftMotorSpeed = leftMotorSpeed - speedChangeInterval;
+    }
+    else {
+        leftMotorSpeed = leftMotorInput;
+    }
+    if (leftMotorSpeed > 0) {
+        leftMotorForward = true;
+    }
+    else {
+        leftMotorForward = false;
+    }
+
+    if (rightMotorSpeed < rightMotorInput) {
+        rightMotorSpeed = rightMotorSpeed + speedChangeInterval;
+    }
+    else if (rightMotorSpeed > rightMotorInput) {
+        rightMotorSpeed = rightMotorSpeed - speedChangeInterval;
+    }
+    else {
+        rightMotorSpeed = rightMotorInput;
+    }
+    if (rightMotorSpeed > 0) {
+        rightMotorForward = true;
+    }
+    else {
+        rightMotorForward = false;
+    }
+
+    // rightMotorSpeed < rightMotorInput ? rightMotorSpeed += speedChangeInterval : rightMotorSpeed -= speedChangeInterval;
+    // rightMotorSpeed > 0 ? rightMotorForward = true : rightMotorForward = false;
 
 
     Serial.print("Lmotor : ");
