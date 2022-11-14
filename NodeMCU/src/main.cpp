@@ -11,20 +11,21 @@ signed short int leftMotorInput = 0;
 signed short int rightMotorInput = 0;
 signed short int totalPostsAPI = 0;
 
+// GPIO Pins
+// int leftENA = D0;
+// int leftIN1 = D1;
+// int leftIN2 = D2;
+// int rightENA = D3;
+// int rightIN1 = D4;
+// int rightIN2 = D5;
+
 // Motors
-Motor leftMotor(false);
-Motor rightMotor(false);
+Motor leftMotor(false, D0, D1, D2);
+Motor rightMotor(false, D3, D4, D5);
 
 // Delays
 int loopDelay = 5;
 
-// GPIO Pins
-const int leftENA = D0;
-const int leftIN1 = D1;
-const int leftIN2 = D2;
-const int rightENA = D3;
-const int rightIN1 = D4;
-const int rightIN2 = D5;
 
 AsyncWebServer server(80);          // Create AsyncWebServer object on port 80
 
@@ -65,12 +66,15 @@ void setup() {
     server.begin();
     Serial.println("Access Point setup completed");
 
-    pinMode(leftENA, OUTPUT);
-    pinMode(leftIN1, OUTPUT);
-    pinMode(leftIN2, OUTPUT);
-    pinMode(rightENA, OUTPUT);
-    pinMode(rightIN1, OUTPUT);
-    pinMode(rightIN2, OUTPUT);
+    leftMotor.setup();
+    rightMotor.setup();
+
+    // pinMode(leftENA, OUTPUT);
+    // pinMode(leftIN1, OUTPUT);
+    // pinMode(leftIN2, OUTPUT);
+    // pinMode(rightENA, OUTPUT);
+    // pinMode(rightIN1, OUTPUT);
+    // pinMode(rightIN2, OUTPUT);
 }
 
 void DebugData() {
@@ -95,30 +99,30 @@ void loop() {
     leftMotor.update(leftMotorInput);
     rightMotor.update(rightMotorInput);
 
-    if (leftMotor.motorDir) {
-        digitalWrite(leftIN1, LOW);
-        digitalWrite(leftIN2, HIGH);
-    }
-    else {
-        digitalWrite(leftIN1, HIGH);
-        digitalWrite(leftIN2, LOW);
-    }
+    // if (leftMotor.motorDir) {
+    //     digitalWrite(leftIN1, LOW);
+    //     digitalWrite(leftIN2, HIGH);
+    // }
+    // else {
+    //     digitalWrite(leftIN1, HIGH);
+    //     digitalWrite(leftIN2, LOW);
+    // }
 
-    if (rightMotor.motorDir) {
-        digitalWrite(rightIN1, LOW);
-        digitalWrite(rightIN2, HIGH);
-    }
-    else {
-        digitalWrite(rightIN1, HIGH);
-        digitalWrite(rightIN2, LOW);
-    }
+    // if (rightMotor.motorDir) {
+    //     digitalWrite(rightIN1, LOW);
+    //     digitalWrite(rightIN2, HIGH);
+    // }
+    // else {
+    //     digitalWrite(rightIN1, HIGH);
+    //     digitalWrite(rightIN2, LOW);
+    // }
 
-    analogWrite(leftENA, leftMotor.motorSpeed);
-    analogWrite(rightENA, rightMotor.motorSpeed);
+    // analogWrite(leftENA, leftMotor.motorSpeed);
+    // analogWrite(rightENA, rightMotor.motorSpeed);
 
     // Use absolute value of motor.motorSpeed when controlling motor PWM signal
 
-    // DebugData();
+    DebugData();
 }
 
 
