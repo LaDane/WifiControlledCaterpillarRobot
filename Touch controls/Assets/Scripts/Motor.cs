@@ -8,6 +8,6 @@ public class Motor {
     public float input;
     public int output;
     public int lastSentOutput;
-    public int maxPWM = 256;
+    public int maxPWM = 255;
     public string ApiEndpoint;
 }
